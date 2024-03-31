@@ -237,7 +237,6 @@ void SaveImagePgm(char* bruit,char* name,float** mat,int lgth,int wdth)
 //-------------------------//
 //---- Fonction Pour TP ---//
 //-------------------------//
-
 float fonction(float x) {
   return 4.0*sqrt(1.0-x*x);
 }
@@ -276,8 +275,6 @@ float kahanSommation(float* array, int length){
     }
     return s;
 }
-
-
 //----------------------------------------------------------
 //----------------------------------------------------------
 // PROGRAMME PRINCIPAL -------------------------------------
@@ -316,10 +313,9 @@ int main(int argc,char** argv)
  float x;
  float erreur;
  float y;
-
  //>Cst
  const double PI=3.14159265358979323846264338;
- int NBINTERV=5000000;    // mettre 5000000
+ int NBINTERV=5000000;
  int NbInt=NBINTERV;
  if (argc>1)  { NbInt=atoi(argv[1]); }
  float* VctPts=fmatrix_allocate_1d(NbInt+1);
@@ -351,19 +347,12 @@ int main(int argc,char** argv)
   // a) sommation par paires
   float sommeRecurs = somRec(VctPts, 0, 0, NBINTERV+1);
   printf(" 2) \n (a) \n Somme par paires = %.10f \n Erreur = %.10f \n", sommeRecurs, abs(sommeRecurs-PI));
-
-  // 2)
-  // b) Somme compensée de Kahan
+   
+   // 2)
+   // b) Somme compensée de Kahan
    float kahanResult = kahanSommation(VctPts, NbInt+1);
    float errorKahan = fabs(PI-kahanResult);
    printf(" 2) \n (b) \n Somme compensée de Kahan = %.10f \n Erreur = %.10f \n", kahanResult, errorKahan);
-
-  // il faut afficher dans le format
- //   [1>Given_Order:]  Pi=3.1334464550  Er=0.0081461986  LogEr=-2.09  
- //   [2>PairwiseSum:]  Pi=3.1415925026  Er=0.0000001510  LogEr=-6.82  
- //   [3>KahanSummat:]  Pi=3.1415927410  Er=0.0000000874  LogEr=-7.06
-
-
  //End
    
 
@@ -411,4 +400,3 @@ int main(int argc,char** argv)
  return 0;
  }
  
-

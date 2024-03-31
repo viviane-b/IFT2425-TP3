@@ -1,5 +1,5 @@
 //------------------------------------------------------
-// module  : Tp-IFT2425-I.c
+// module  : Tp-IFT2425-III.c
 // author  : 
 // date    : 
 // version : 1.0
@@ -238,46 +238,6 @@ void SaveImagePgm(char* bruit,char* name,float** mat,int lgth,int wdth)
 //---- Fonction Pour TP ---//
 //-------------------------//
 
-float fonction(float x) {
-  return 4.0*sqrt(1.0-x*x);
-}
-
-float somRec(float* VctPts, float somme, int debut, int fin) {
-  if (fin-debut ==1) {              // cas de base
-    somme = VctPts[debut]+VctPts[fin];
-    // printf("VctPTs[debut]=%f, VctPts[fin]=%f,  somme de 2=%f \n",VctPts[debut], VctPts[fin], somme);
-    return somme;
-
-  } else if (fin-debut ==0) {       // un seul élément à considérer
-    somme=VctPts[debut];
-    // printf("somme de 1 = %f \n", somme);
-    return somme;
-
-  }
-
- // printf("debut = %d, fin= %d \n", debut, fin);
-//  if (debut-fin>0) {
-//    return 0;
-//  }
-  return somRec(VctPts, somme, debut, (debut+fin)/2) + somRec(VctPts, somme, (debut+fin)/2+1, fin);
-
-}
-
-float kahanSommation(float* array, int length){
-    float s = 0.0f;
-    float e = 0.0f;
-    float y, temp;
-
-    for (int i = 0; i<length; ++i){
-        temp= s;
-        y = array[i] + e;
-        s = temp + y;
-        e = (temp-s)+y;
-    }
-    return s;
-}
-
-
 //----------------------------------------------------------
 //----------------------------------------------------------
 // PROGRAMME PRINCIPAL -------------------------------------
@@ -313,56 +273,17 @@ int main(int argc,char** argv)
  //>Var
  float result; 
  double result_;
- float x;
- float erreur;
- float y;
 
  //>Cst
  const double PI=3.14159265358979323846264338;
- int NBINTERV=5000000;    // mettre 5000000
+ int NBINTERV=5000000;
  int NbInt=NBINTERV;
  if (argc>1)  { NbInt=atoi(argv[1]); }
  float* VctPts=fmatrix_allocate_1d(NbInt+1);
 
  //Programmer ici
-
-   // methode des trapezes
-  float somme = 0.0;
-  for (i=1; i<NBINTERV; i++) {
-    x = (float)i/NBINTERV;
-    // printf("i= %d, x=%f \n", i,x);
-
-    y = 1.0/NBINTERV*fonction(x);
-    VctPts[i] = y;
-    somme += y;
-  }
-
-  VctPts[0]=(1.0/(2*NBINTERV))*fonction(0);
-  VctPts[NBINTERV]=(1.0/(2*NBINTERV))*fonction(1);
-
-  somme += (1.0/(2*NBINTERV))*fonction(0) + (1.0/(2*NBINTERV))*fonction(1);
-  result = somme;
-
-  erreur = abs(PI-result);
-
-  printf("QUESTION 1 \n 1) \n Valeur estimée=%.10f \n Erreur=%.10f \n\n", result, erreur);
-
-  // 2) 
-  // a) sommation par paires
-  float sommeRecurs = somRec(VctPts, 0, 0, NBINTERV+1);
-  printf(" 2) \n (a) \n Somme par paires = %.10f \n Erreur = %.10f \n", sommeRecurs, abs(sommeRecurs-PI));
-
-  // 2)
-  // b) Somme compensée de Kahan
-   float kahanResult = kahanSommation(VctPts, NbInt+1);
-   float errorKahan = fabs(PI-kahanResult);
-   printf(" 2) \n (b) \n Somme compensée de Kahan = %.10f \n Erreur = %.10f \n", kahanResult, errorKahan);
-
-  // il faut afficher dans le format
- //   [1>Given_Order:]  Pi=3.1334464550  Er=0.0081461986  LogEr=-2.09  
- //   [2>PairwiseSum:]  Pi=3.1415925026  Er=0.0000001510  LogEr=-6.82  
- //   [3>KahanSummat:]  Pi=3.1415927410  Er=0.0000000874  LogEr=-7.06
-
+ 
+ printf("QUESTION 4 \n");
 
  //End
    
@@ -410,5 +331,3 @@ int main(int argc,char** argv)
  printf("\n Fini... \n\n\n");
  return 0;
  }
- 
-
