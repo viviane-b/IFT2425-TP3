@@ -237,7 +237,26 @@ void SaveImagePgm(char* bruit,char* name,float** mat,int lgth,int wdth)
 //-------------------------//
 //---- Fonction Pour TP ---//
 //-------------------------//
-
+// Version FLOAT
+float sumF(int N, float x0, float mu){
+  float sum= 0.0f;
+  float x = x0;
+  for (int n = 1; n<=N; ++n){
+    x=mu*x*(1-x);
+    sum += sqrtf(x);
+  }
+  return sum;
+}
+// Version DOUBLE
+double sumD(int N, double x0, double mu){
+  double sum= 0.0;
+  double x = x0;
+  for (int n = 1; n<=N; ++n){
+    x=mu*x*(1-x);
+    sum += sqrtf(x);
+  }
+  return sum;
+}
 //----------------------------------------------------------
 //----------------------------------------------------------
 // PROGRAMME PRINCIPAL -------------------------------------
@@ -283,7 +302,43 @@ int main(int argc,char** argv)
 
  //Programmer ici
  
- printf("QUESTION 4 \n");
+  int N = 10000000;
+
+  //Version FLOAT
+  float mu_f = 4.0f;
+
+  float X0_1f = 0.2;
+  float sum1_f = sumF(N,X0_1f, mu_f);
+  float x_1f = 2*N/sum1_f;
+
+  float X0_2f = 0.4;
+  float sum2_f = sumF(N,X0_2f, mu_f);
+  float x_2f = 2*N/sum2_f;
+
+  float X0_3f = 0.6;
+  float sum3_f = sumF(N,X0_3f, mu_f);
+  float x_3f = 2*N/sum3_f;
+  
+
+  printf(" 4) Version float \n 0.20:> %.10f \n 0.40:> %.10f \n 0.60:> %.10f \n", x_1f, x_2f, x_3f);
+
+  //Version DOUBLE
+  double mu_d = 4.0;
+
+  double X0_1d = 0.2;
+  double sum1_d = sumD(N,X0_1d, mu_d);
+  double x_1d = 2*N/sum1_d;
+
+  double X0_2d = 0.4;
+  double sum2_d = sumD(N,X0_2d, mu_d);
+  double x_2d = 2*N/sum2_d;
+
+  double X0_3d = 0.6;
+  double sum3_d = sumD(N,X0_3d, mu_d);
+  double x_3f = 2*N/sum3_d;
+
+  printf(" 4) Version float \n 0.20:> %.10f \n 0.40:> %.10f \n 0.60:> %.10f \n", x_1d, x_2d, x_3d);
+
 
  //End
    
