@@ -1,7 +1,7 @@
 //------------------------------------------------------
 // module  : Tp-IFT2425-III.c
-// author  : 
-// date    : 
+// author  : Viviane Binet 20244728, Léane Lavigne 20190113
+// date    : 5 avril 2024
 // version : 1.0
 // language: C++
 // note    :
