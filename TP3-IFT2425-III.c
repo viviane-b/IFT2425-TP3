@@ -335,7 +335,7 @@ int main(int argc,char** argv)
 
   double X0_3d = 0.6;
   double sum3_d = sumD(N,X0_3d, mu_d);
-  double x_3f = 2*N/sum3_d;
+  double x_3d = 2*N/sum3_d;
 
   printf(" 4) Version float \n 0.20:> %.10f \n 0.40:> %.10f \n 0.60:> %.10f \n", x_1d, x_2d, x_3d);
 
