@@ -337,52 +337,10 @@ int main(int argc,char** argv)
   double sum3_d = sumD(N,X0_3d, mu_d);
   double x_3d = 2*N/sum3_d;
 
-  printf(" 4) Version float \n 0.20:> %.10f \n 0.40:> %.10f \n 0.60:> %.10f \n", x_1d, x_2d, x_3d);
+  printf(" 4) Version double \n 0.20:> %.10f \n 0.40:> %.10f \n 0.60:> %.10f \n", x_1d, x_2d, x_3d);
 
 
  //End
    
-
-//--------------------------------------------------------------------------------
-//---------------- visu sous XWINDOW ---------------------------------------------
-//--------------------------------------------------------------------------------
- if (flag_graph)
- {
- //ouverture session graphique
- if (open_display()<0) printf(" Impossible d'ouvrir une session graphique");
- sprintf(nomfen_ppicture,"Graphe : ","");
- win_ppicture=fabrique_window(nomfen_ppicture,10,10,width,length,zoom);
- x_ppicture=cree_Ximage(Graph2D,zoom,length,width);
-
- //Sauvegarde
- //SaveImagePgm((char*)"",(char*)"Graphe",Graph2D,length,width); //Pour sauvegarder l'image
- printf("\n\n Pour quitter,appuyer sur la barre d'espace");
- fflush(stdout);
-
- //boucle d'evenements
-  for(;;)
-     {
-      XNextEvent(display,&ev);
-       switch(ev.type)
-        {
-	 case Expose:   
-
-         XPutImage(display,win_ppicture,gc,x_ppicture,0,0,0,0,x_ppicture->width,x_ppicture->height);  
-         break;
-
-         case KeyPress: 
-         XDestroyImage(x_ppicture);
-
-         XFreeGC(display,gc);
-         XCloseDisplay(display);
-         flag_graph=0;
-         break;
-         }
-   if (!flag_graph) break;
-   }
- } 
-       
- //retour sans probleme 
- printf("\n Fini... \n\n\n");
  return 0;
  }

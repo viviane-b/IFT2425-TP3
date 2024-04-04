@@ -245,22 +245,14 @@ float fonction(float x) {
 float somRec(float* VctPts, float somme, int debut, int fin) {
   if (fin-debut ==1) {              // cas de base
     somme = VctPts[debut]+VctPts[fin];
-    // printf("VctPTs[debut]=%f, VctPts[fin]=%f,  somme de 2=%f \n",VctPts[debut], VctPts[fin], somme);
     return somme;
 
   } else if (fin-debut ==0) {       // un seul élément à considérer
     somme=VctPts[debut];
-    // printf("somme de 1 = %f \n", somme);
     return somme;
-
   }
 
- // printf("debut = %d, fin= %d \n", debut, fin);
-//  if (debut-fin>0) {
-//    return 0;
-//  }
   return somRec(VctPts, somme, debut, (debut+fin)/2) + somRec(VctPts, somme, (debut+fin)/2+1, fin);
-
 }
 
 float kahanSommation(float* array, int length){
@@ -345,69 +337,25 @@ int main(int argc,char** argv)
 
   erreur = abs(PI-result);
 
-  printf("QUESTION 1 \n 1) \n Valeur estimée=%.10f \n Erreur=%.10f \n\n", result, erreur);
+  printf("QUESTIONs 1 et 2 \n[1>Given_Order:]  Pi=%.10f  Er=%.10f  LogEr=%.2f \n", result, erreur, log10(erreur) );
 
   // 2) 
   // a) sommation par paires
   float sommeRecurs = somRec(VctPts, 0, 0, NBINTERV+1);
-  printf(" 2) \n (a) \n Somme par paires = %.10f \n Erreur = %.10f \n", sommeRecurs, abs(sommeRecurs-PI));
+  float errPaires = abs(sommeRecurs-PI);
+  printf("[2>PairwiseSum:]  Pi=%.10f  Er=%.10f  LogEr=%.2f \n", sommeRecurs, errPaires, log10(errPaires) );
 
   // 2)
   // b) Somme compensée de Kahan
    float kahanResult = kahanSommation(VctPts, NbInt+1);
    float errorKahan = fabs(PI-kahanResult);
-   printf(" 2) \n (b) \n Somme compensée de Kahan = %.10f \n Erreur = %.10f \n", kahanResult, errorKahan);
-
-  // il faut afficher dans le format
- //   [1>Given_Order:]  Pi=3.1334464550  Er=0.0081461986  LogEr=-2.09  
- //   [2>PairwiseSum:]  Pi=3.1415925026  Er=0.0000001510  LogEr=-6.82  
- //   [3>KahanSummat:]  Pi=3.1415927410  Er=0.0000000874  LogEr=-7.06
+   printf("[3>KahanSummat:]  Pi=%.10f  Er=%.10f  LogEr=%.2f \n", kahanResult, errorKahan, log10(errorKahan));
 
 
  //End
    
 
-//--------------------------------------------------------------------------------
-//---------------- visu sous XWINDOW ---------------------------------------------
-//--------------------------------------------------------------------------------
- if (flag_graph)
- {
- //ouverture session graphique
- if (open_display()<0) printf(" Impossible d'ouvrir une session graphique");
- sprintf(nomfen_ppicture,"Graphe : ","");
- win_ppicture=fabrique_window(nomfen_ppicture,10,10,width,length,zoom);
- x_ppicture=cree_Ximage(Graph2D,zoom,length,width);
 
- //Sauvegarde
- //SaveImagePgm((char*)"",(char*)"Graphe",Graph2D,length,width); //Pour sauvegarder l'image
- printf("\n\n Pour quitter,appuyer sur la barre d'espace");
- fflush(stdout);
-
- //boucle d'evenements
-  for(;;)
-     {
-      XNextEvent(display,&ev);
-       switch(ev.type)
-        {
-	 case Expose:   
-
-         XPutImage(display,win_ppicture,gc,x_ppicture,0,0,0,0,x_ppicture->width,x_ppicture->height);  
-         break;
-
-         case KeyPress: 
-         XDestroyImage(x_ppicture);
-
-         XFreeGC(display,gc);
-         XCloseDisplay(display);
-         flag_graph=0;
-         break;
-         }
-   if (!flag_graph) break;
-   }
- } 
-       
- //retour sans probleme 
- printf("\n Fini... \n\n\n");
  return 0;
  }
  
